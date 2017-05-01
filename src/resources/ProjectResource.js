@@ -1,38 +1,38 @@
 import RestfulResource from '../lib/RestfulResource';
 
 class ProjectResource extends RestfulResource {
-    _times() {
+    _times(_this) {
         return {
             get(index, params = {}) {
-                return this.fetch(`${index}/times`, params);
+                return _this.fetch(`${index}/times`, params);
             },
             summary(index, params = {}) {
-                return this.fetch(`${index}/times/summary`, params);
+                return _this.fetch(`${index}/times/summary`, params);
             }
         };
     }
-    _users() {
+    _users(_this) {
         return {
             get(index, params = {}) {
-                return this.fetch(`${index}/users`, params);
+                return _this.fetch(`${index}/users`, params);
             },
             expenses(index, user, params = {}) {
-                return this.fetch(`${index}/users/${user}/expenses`, params);
+                return _this.fetch(`${index}/users/${user}/expenses`, params);
             },
             times(index, user, params = {}) {
-                return this.fetch(`${index}/users/${user}/times`, params);
+                return _this.fetch(`${index}/users/${user}/times`, params);
             },
             tasks: {
                 times(index, user, task, params = {}) {
-                    return this.fetch(`${index}/users/${user}/tasks/${task}/times`, params);
+                    return _this.fetch(`${index}/users/${user}/tasks/${task}/times`, params);
                 },
             }
         };
     }
     constructor(dailys) {
         super(dailys, 'projects');
-        this.times = this._times();
-        this.users = this._users();
+        this.times = this._times(this);
+        this.users = this._users(this);
     }
     categories(index, params = {}) {
         return this.fetch(`${index}/categories`, params);

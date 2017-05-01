@@ -1,22 +1,22 @@
 import RestfulResource from '../lib/RestfulResource';
 
 class UserResource extends RestfulResource {
-    _times() {
+    _times(_this) {
         return {
             get(index, params = {}) {
-                return this.fetch(`${index}/times`, params);
+                return _this.fetch(`${index}/times`, params);
             },
             overview(index, params = {}) {
-                return this.fetch(`${index}/times/overview`, params);
+                return _this.fetch(`${index}/times/overview`, params);
             },
             fetch(index, time, params = {}) {
-                return this.fetch(`${index}/times/${time}`, params);
+                return _this.fetch(`${index}/times/${time}`, params);
             }
         };
     }
     constructor(dailys) {
         super(dailys, 'users');
-        this.times = this._times();
+        this.times = this._times(this);
     }
     expenses(index, params = {}) {
         return this.fetch(`${index}/expenses`, params);
