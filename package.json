@@ -1,6 +1,6 @@
 {
   "name": "dailys-js",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "The official javascript library for dailys.",
   "main": "index.js",
   "devDependencies": {
