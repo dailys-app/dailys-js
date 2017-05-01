@@ -2,7 +2,7 @@
   "name": "dailys-js",
   "version": "0.0.1",
   "description": "The official javascript library for dailys.",
-  "main": "dist/index.js",
+  "main": "index.js",
   "private": true,
   "devDependencies": {
     "cross-env": "^4.0.0",

@@ -5,11 +5,19 @@ class SingleResource extends Resource {
         super(dailys);
         this._resource = resource;
     }
-    get(params = {}) {
+    fetch(params = {}) {
         return this._request(
             'get',
             this._resource,
             {},
+            params
+        );
+    }
+    update(data = {}, params = {}) {
+        return this._request(
+            'put',
+            this._resource,
+            data,
             params
         );
     }

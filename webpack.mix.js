@@ -9,5 +9,4 @@ mix
                 libraryTarget: "umd"
             }
         }
-    ).js('src/index.js', 'dist/')
-    .minify('dist/index.js');
+    ).js('src/index.js', 'dist/');
