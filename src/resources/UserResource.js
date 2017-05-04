@@ -1,26 +1,69 @@
 import RestfulResource from '../lib/RestfulResource';
 
 class UserResource extends RestfulResource {
-    _times(_this) {
-        return {
+    /**
+     * Create a new UserResource instance with the request property.
+     *
+     * @param {Request} request - An instance of the request class.
+     */
+    constructor(request) {
+        super(request, 'users');
+        this.times = {
+
+            /**
+             * Get the index of the resource.
+             *
+             * @param {string} index - The resource id.
+             * @param {object} params - The URL query parameters for the request.
+             * @returns {Promise}
+             */
             get(index, params = {}) {
-                return _this.fetch(`${index}/times`, params);
+                return request.get(`users/${index}/times`, params);
             },
+
+            /**
+             * Get the index of the resource.
+             *
+             * @param {string} index - The resource id.
+             * @param {object} params - The URL query parameters for the request.
+             * @returns {Promise}
+             */
             overview(index, params = {}) {
-                return _this.fetch(`${index}/times/overview`, params);
+                return request.get(`users/${index}/times/overview`, params);
             },
+
+            /**
+             * Get the index of the resource.
+             *
+             * @param {string} index - The resource id.
+             * @param {string} time - The sub-resource id.
+             * @param {object} params - The URL query parameters for the request.
+             * @returns {Promise}
+             */
             fetch(index, time, params = {}) {
-                return _this.fetch(`${index}/times/${time}`, params);
+                return request.get(`users/${index}/times/${time}`, params);
             }
         };
     }
-    constructor(dailys) {
-        super(dailys, 'users');
-        this.times = this._times(this);
-    }
+
+    /**
+     * Get the index of the resource.
+     *
+     * @param {string} index - The resource id.
+     * @param {object} params - The URL query parameters for the request.
+     * @returns {Promise}
+     */
     expenses(index, params = {}) {
         return this.fetch(`${index}/expenses`, params);
     }
+
+    /**
+     * Get the index of the resource.
+     *
+     * @param {string} index - The resource id.
+     * @param {object} params - The URL query parameters for the request.
+     * @returns {Promise}
+     */
     projects(index, params = {}) {
         return this.fetch(`${index}/projects`, params);
     }

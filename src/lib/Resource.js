@@ -1,13 +1,11 @@
 class Resource {
-    constructor(dailys) {
-        this._dailys = dailys;
-    }
-    _request(method, url, data = {}, params = {}) {
-        return this._dailys
-            ._http
-            .request({ url, method, data, params })
-            .then(this._dailys._successHandler)
-            .catch(this._dailys._errorHandler);
+    /**
+     * Create a new Resource instance with the request property.
+     *
+     * @param {Request} request - An instance of the request class.
+     */
+    constructor(request) {
+        this.request = request;
     }
 }
 

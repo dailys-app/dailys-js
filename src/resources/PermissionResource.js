@@ -1,15 +1,25 @@
 import Resource from '../lib/Resource';
 
 class PermissionResource extends Resource {
-    constructor(dailys) {
-        super(dailys);
-        this._resource = 'permissions';
-    }
+    /**
+     * Get the index of the resource.
+     *
+     * @param {object} params - The URL query parameters for the request.
+     * @returns {Promise}
+     */
     get(params = {}) {
-        return this._request('get', this._resource, {}, params);
+        return this.request.get('permissions', params);
     }
+
+    /**
+     * Get a single resource.
+     *
+     * @param {string} index - The resource id.
+     * @param {object} params - The URL query parameters for the request.
+     * @returns {Promise}
+     */
     fetch(index, params = {}) {
-        return this._request('get', `${this._resource}/${index}`, {}, params);
+        return this.request.get(`permissions/${index}`, params);
     }
 }
 
