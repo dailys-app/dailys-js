@@ -1,6 +1,12 @@
 import RestfulResource from '../lib/RestfulResource';
 
 class UserResource extends RestfulResource {
+    times: {
+        get: any,
+        overview: any,
+        fetch: any
+    };
+
     /**
      * Create a new UserResource instance with the request property.
      *

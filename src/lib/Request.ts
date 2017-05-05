@@ -1,31 +1,23 @@
-import Axios from 'axios';
-
-/**
- * Create a new WeakMap for keeping properties private on the class. This works by using the instance
- * of the class as a key in the map. The privacy comes with a little overhead of having to fetch the
- * object from the request map for each method, however the class is small so this is acceptable.
- *
- * @type {WeakMap}
- */
-const requestMap = new WeakMap();
+import Axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
 
 /**
  * Request Class
  */
 class Request {
+    private axios: AxiosInstance;
+    private successHandler: (AxiosResponse) => Object;
+    private errorHandler: (AxiosError) => Object;
+
     /**
-     * Create a new instance of the request.
      *
-     * @param {string} baseUrl - The base URL for all of the requests.
+     * @param {string} baseURL - The base URL for all of the requests.
      * @param {function} successHandler - The global success handler for a request.
      * @param {function} errorHandler - The global error handler for a request.
      */
     constructor(baseURL = '/', successHandler = $response => $response.data, errorHandler = $error => $error) {
-        requestMap.set(this, {
-            axios: Axios.create({ baseURL }),
-            successHandler: successHandler,
-            errorHandler: errorHandler
-        });
+        this.axios =  Axios.create({ baseURL });
+        this.successHandler = successHandler;
+        this.errorHandler = errorHandler;
     }
 
     /**
@@ -35,10 +27,8 @@ class Request {
      * @param {string} value - The header value.
      * @returns {Request}
      */
-    header(header, value) {
-        const properties = requestMap.get(this);
-
-        properties.axios.defaults.headers.common[header] = value;
+    header(header: string, value: string): Request {
+        this.axios.defaults.headers.common[header] = value;
 
         return this;
     }
@@ -50,9 +40,7 @@ class Request {
      * @returns {Request}
      */
     onSuccess(handler) {
-        const properties = requestMap.get(this);
-
-        properties.successHandler = function($response) {
+        this.successHandler = function($response) {
             handler($response);
             return $response.data;
         };
@@ -67,9 +55,7 @@ class Request {
      * @returns {Request}
      */
     onError(handler) {
-        const properties = requestMap.get(this);
-
-        properties.errorHandler = function($error) {
+        this.errorHandler = function($error) {
             handler($error);
             return $error;
         };
@@ -85,11 +71,9 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     get(url, params = {}) {
-        const properties = requestMap.get(this);
-
-        return properties.axios.request({ method: 'GET', url, params })
-            .then(properties.successHandler)
-            .catch(properties.errorHandler);
+        return this.axios.request({ method: 'GET', url, params })
+            .then(this.successHandler)
+            .catch(this.errorHandler);
     }
 
     /**
@@ -101,11 +85,9 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     post(url, data = {}, params = {}) {
-        const properties = requestMap.get(this);
-
-        return properties.axios.request({ method: 'POST', url, data, params })
-            .then(properties.successHandler)
-            .catch(properties.errorHandler);
+        return this.axios.request({ method: 'POST', url, data, params })
+            .then(this.successHandler)
+            .catch(this.errorHandler);
     }
 
     /**
@@ -117,11 +99,9 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     put(url, data = {}, params = {}) {
-        const properties = requestMap.get(this);
-
-        return properties.axios.request({ method: 'PUT', url, data, params })
-            .then(properties.successHandler)
-            .catch(properties.errorHandler);
+        return this.axios.request({ method: 'PUT', url, data, params })
+            .then(this.successHandler)
+            .catch(this.errorHandler);
     }
 
     /**
@@ -133,11 +113,9 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     patch(url, data = {}, params = {}) {
-        const properties = requestMap.get(this);
-
-        return properties.axios.request({ method: 'PATCH', url, data, params })
-            .then(properties.successHandler)
-            .catch(properties.errorHandler);
+        return this.axios.request({ method: 'PATCH', url, data, params })
+            .then(this.successHandler)
+            .catch(this.errorHandler);
     }
 
     /**
@@ -148,11 +126,9 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     delete(url, params = {}) {
-        const properties = requestMap.get(this);
-
-        return properties.axios.request({ method: 'DELETE', url, params })
-            .then(properties.successHandler)
-            .catch(properties.errorHandler);
+        return this.axios.request({ method: 'DELETE', url, params })
+            .then(this.successHandler)
+            .catch(this.errorHandler);
     }
 }
 

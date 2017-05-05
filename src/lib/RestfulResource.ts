@@ -1,6 +1,9 @@
-import Resource from '../lib/Resource';
+import Resource from './Resource';
+import Request from './Request';
 
 class RestfulResource extends Resource {
+    resource: string;
+
     /**
      * Create a new SingleResource instance with the request property, and resource type.
      *
@@ -8,15 +11,15 @@ class RestfulResource extends Resource {
      * @param {string} resource - The resource sub URI.
      * @param {array} additional - Additional get resources.
      */
-    constructor(request, resource, additional = []) {
+    constructor(request: Request, resource: string, additional = []) {
         super(request);
         this.resource = resource;
 
-        let _this = this;
+        let _self = this;
 
         for (let subResource in additional) {
-            _this[additional[subResource]] = (index, params = {}) => {
-                return _this.fetch(`${index}/${subResource}`, params);
+            _self[additional[subResource]] = (index, params = {}) => {
+                return _self.fetch(`${index}/${subResource}`, params);
             };
         }
     }

@@ -1,13 +1,16 @@
-import Resource from '../lib/Resource';
+import Resource from './Resource';
+import Request from './Request';
 
 class SingleResource extends Resource {
+    resource: string;
+
     /**
      * Create a new SingleResource instance with the request property, and resource type.
      *
      * @param {Request} request - An instance of the request class.
      * @param {string} resource - The resource sub URI.
      */
-    constructor(request, resource) {
+    constructor(request: Request, resource: string) {
         super(request);
         this.resource = resource;
     }

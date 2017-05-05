@@ -1,6 +1,12 @@
 import RestfulResource from '../lib/RestfulResource';
 
 class ProjectResource extends RestfulResource {
+    times: {
+        get: (string, object) => Promise<Object>,
+        summary: (string, object) => Promise<Object>,
+    };
+    users: Object;
+
     /**
      * Create a new ProjectResource instance with the request property.
      *
