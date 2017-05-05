@@ -7,6 +7,7 @@ import PermissionResource from './resources/PermissionResource';
 import ProjectResource from './resources/ProjectResource';
 import TimeResource from './resources/TimeResource';
 import UserResource from './resources/UserResource';
+import InvoiceResource from './resources/InvoiceResource';
 
 class Dailys {
     /**
@@ -18,7 +19,7 @@ class Dailys {
     constructor(uri = 'https://dailys.nz/api/v1', token = null) {
         // Create a request instance with the base URI, and
         // create a global request instance without the base uri.
-        this.request = new Request(uri)
+        this.request = new Request(uri);
         this.global = new Request();
 
         // If the token was supplied, then we use the authorisation
@@ -37,7 +38,6 @@ class Dailys {
         this.charges = new RestfulResource(this.request, 'charges', ['categories']);
         this.clients = new RestfulResource(this.request, 'clients', ['invoices', 'projects']);
         this.invites = new RestfulResource(this.request, 'invites', ['resend']);
-        this.invoices = new RestfulResource(this.request, 'invoices', ['status']);
         this.tasks = new RestfulResource(this.request, 'tasks', ['categories']);
         this.roles = new RestfulResource(this.request, 'roles');
 
@@ -46,6 +46,7 @@ class Dailys {
         this.projects = new ProjectResource(this.request);
         this.times = new TimeResource(this.request);
         this.users = new UserResource(this.request);
+        this.invoices = new InvoiceResource(this.request);
     }
 
     /**
