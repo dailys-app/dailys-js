@@ -165,7 +165,7 @@ class ProjectResource extends RestfulResource {
      * @returns {Promise}
      */
     total(index, params = {}) {
-        return this.fetch(`${index}/times`, params);
+        return this.fetch(`${index}/total`, params);
     }
 }
 
