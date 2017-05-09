@@ -7,6 +7,7 @@ class Request {
     private axios: AxiosInstance;
     private successHandler: (AxiosResponse) => Object;
     private errorHandler: (AxiosError) => Object;
+    private headers: Object;
 
     /**
      *
@@ -18,6 +19,7 @@ class Request {
         this.axios =  Axios.create({ baseURL });
         this.successHandler = successHandler;
         this.errorHandler = errorHandler;
+        this.headers = {};
     }
 
     /**
@@ -28,7 +30,7 @@ class Request {
      * @returns {Request}
      */
     header(header: string, value: string): Request {
-        this.axios.defaults.headers.common[header] = value;
+        this.headers[header] = value;
 
         return this;
     }
@@ -71,7 +73,7 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     get(url, params = {}) {
-        return this.axios.request({ method: 'GET', url, params })
+        return this.axios.request({ method: 'GET', url, params, headers: this.headers })
             .then(this.successHandler)
             .catch(this.errorHandler);
     }
@@ -85,7 +87,7 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     post(url, data = {}, params = {}) {
-        return this.axios.request({ method: 'POST', url, data, params })
+        return this.axios.request({ method: 'POST', url, data, params, headers: this.headers })
             .then(this.successHandler)
             .catch(this.errorHandler);
     }
@@ -99,7 +101,7 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     put(url, data = {}, params = {}) {
-        return this.axios.request({ method: 'PUT', url, data, params })
+        return this.axios.request({ method: 'PUT', url, data, params, headers: this.headers })
             .then(this.successHandler)
             .catch(this.errorHandler);
     }
@@ -113,7 +115,7 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     patch(url, data = {}, params = {}) {
-        return this.axios.request({ method: 'PATCH', url, data, params })
+        return this.axios.request({ method: 'PATCH', url, data, params, headers: this.headers })
             .then(this.successHandler)
             .catch(this.errorHandler);
     }
@@ -126,7 +128,7 @@ class Request {
      * @returns {Promise} - A promise for handling the response.
      */
     delete(url, params = {}) {
-        return this.axios.request({ method: 'DELETE', url, params })
+        return this.axios.request({ method: 'DELETE', url, params, headers: this.headers })
             .then(this.successHandler)
             .catch(this.errorHandler);
     }
