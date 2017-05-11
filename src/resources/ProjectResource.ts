@@ -2,10 +2,10 @@ import RestfulResource from '../lib/RestfulResource';
 
 class ProjectResource extends RestfulResource {
     times: {
-        get: (string, object) => Promise<Object>,
-        summary: (string, object) => Promise<Object>,
+        get: (string, object) => Promise<object>,
+        summary: (string, object) => Promise<object>,
     };
-    users: Object;
+    users: object;
 
     /**
      * Create a new ProjectResource instance with the request property.
@@ -115,7 +115,7 @@ class ProjectResource extends RestfulResource {
     }
 
     /**
-     * Get the index of the resource.
+     * Get the expenses of the resource.
      *
      * @param {string} index - The resource id.
      * @param {object} params - The URL query parameters for the request.
@@ -137,14 +137,14 @@ class ProjectResource extends RestfulResource {
     }
 
     /**
-     * Get the index of the resource.
+     * Update the status of the resource.
      *
      * @param {string} index - The resource id.
      * @param {object} params - The URL query parameters for the request.
      * @returns {Promise}
      */
     status(index, params = {}) {
-        return this.fetch(`${index}/status`, params);
+        return this.update(`${index}/status`, params);
     }
 
     /**
