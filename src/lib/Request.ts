@@ -5,9 +5,9 @@ import Axios, {AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig} fro
  */
 class Request {
     private axios: AxiosInstance;
-    private successHandler: (AxiosResponse) => Object;
-    private errorHandler: (AxiosError) => Object;
-    private headers: Object;
+    private successHandler: (AxiosResponse) => object;
+    private errorHandler: (AxiosError) => object;
+    private headers: object;
 
     /**
      *
