@@ -8,6 +8,7 @@ import ProjectResource from './resources/ProjectResource';
 import TimeResource from './resources/TimeResource';
 import UserResource from './resources/UserResource';
 import InvoiceResource from './resources/InvoiceResource';
+import {AxiosRequestConfig, AxiosResponse} from "axios";
 
 class Dailys {
     // Request data.
@@ -111,6 +112,28 @@ class Dailys {
         this.global.header(header, value);
 
         return this;
+    }
+
+    /**
+     * Add a global interceptor before the request is sent.
+     *
+     * @param {Function} onFulfilled
+     * @param {Function} onRejected
+     */
+    before(onFulfilled: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>, onRejected?: (error: any) => any) {
+        this.request.before(onFulfilled, onRejected);
+        this.global.before(onFulfilled, onRejected);
+    }
+
+    /**
+     * Add a global interceptor after the response is received.
+     *
+     * @param {Function} onFulfilled
+     * @param {Function} onRejected
+     */
+    after(onFulfilled: (value: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>, onRejected?: (error: any) => any) {
+        this.request.after(onFulfilled, onRejected);
+        this.global.after(onFulfilled, onRejected);
     }
 
     /**

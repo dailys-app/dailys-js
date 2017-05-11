@@ -1,4 +1,4 @@
-import Axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
+import Axios, {AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig} from 'axios';
 
 /**
  * Request Class
@@ -63,6 +63,14 @@ class Request {
         };
 
         return this;
+    }
+
+    before(onFulfilled: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>, onRejected?: (error: any) => any) {
+        return this.axios.interceptors.request.use(onFulfilled, onRejected);
+    }
+
+    after(onFulfilled: (value: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>, onRejected?: (error: any) => any) {
+        return this.axios.interceptors.response.use(onFulfilled, onRejected);
     }
 
     /**
