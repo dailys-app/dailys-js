@@ -11,9 +11,10 @@ class ProjectResource extends RestfulResource {
      * Create a new ProjectResource instance with the request property.
      *
      * @param {Request} request - An instance of the request class.
+     * @param {string} version - The api version to use.
      */
-    constructor(request) {
-        super(request, 'projects');
+    constructor(request, version) {
+        super(request, version + 'projects');
 
         this.times = {
             /**
@@ -24,7 +25,7 @@ class ProjectResource extends RestfulResource {
              * @returns {Promise}
              */
             get(index, params = {}) {
-                return request.get(`projects/${index}/times`, params);
+                return request.get(version + `projects/${index}/times`, params);
             },
 
             /**
@@ -35,7 +36,7 @@ class ProjectResource extends RestfulResource {
              * @returns {Promise}
              */
             summary(index, params = {}) {
-                return request.get(`projects/${index}/times/summary`, params);
+                return request.get(version + `projects/${index}/times/summary`, params);
             }
         };
 
@@ -48,7 +49,7 @@ class ProjectResource extends RestfulResource {
              * @returns {Promise}
              */
             get(index, params = {}) {
-                return request.get(`projects/${index}/users`, params);
+                return request.get(version + `projects/${index}/users`, params);
             },
 
             /**
@@ -60,7 +61,7 @@ class ProjectResource extends RestfulResource {
              * @returns {Promise}
              */
             expenses(index, user, params = {}) {
-                return request.get(`projects/${index}/users/${user}/expenses`, params);
+                return request.get(version + `projects/${index}/users/${user}/expenses`, params);
             },
 
             /**
@@ -72,7 +73,7 @@ class ProjectResource extends RestfulResource {
              * @returns {Promise}
              */
             times(index, user, params = {}) {
-                return request.get(`projects/${index}/users/${user}/times`, params);
+                return request.get(version + `projects/${index}/users/${user}/times`, params);
             },
             tasks: {
                 /**
@@ -85,7 +86,7 @@ class ProjectResource extends RestfulResource {
                  * @returns {Promise}
                  */
                 times(index, user, task, params = {}) {
-                    return request.get(`projects/${index}/users/${user}/tasks/${task}/times`, params);
+                    return request.get(version + `projects/${index}/users/${user}/tasks/${task}/times`, params);
                 },
             }
         };

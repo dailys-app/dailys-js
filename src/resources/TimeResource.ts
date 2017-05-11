@@ -5,9 +5,10 @@ class TimeResource extends RestfulResource {
      * Create a new TimeResource instance with the request property.
      *
      * @param {Request} request - An instance of the request class.
+     * @param {string} version - The api version to use.
      */
-    constructor(request) {
-        super(request, 'times');
+    constructor(request, version) {
+        super(request, version + 'times');
     }
 
     /**

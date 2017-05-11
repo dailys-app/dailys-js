@@ -10,10 +10,31 @@ import UserResource from './resources/UserResource';
 import InvoiceResource from './resources/InvoiceResource';
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 
+/**
+ * Determine if a string ends with a suffix.
+ *
+ * @param {string} string
+ * @param {string} suffix
+ * @returns {boolean}
+ */
+function strEndsWith(string, suffix) {
+    return string.indexOf(suffix, string.length - suffix.length) !== -1;
+}
+
+/**
+ * Determine if a string starts with a prefix.
+ *
+ * @param {string} string
+ * @param {string} prefix
+ * @returns {boolean}
+ */
+function strStartsWith(string, prefix) {
+    return string.substring(0, prefix.length) === prefix;
+}
+
 class Dailys {
     // Request data.
     request: Request;
-    global: Request;
 
     // Single resources.
     organisation: SingleResource;
@@ -39,13 +60,18 @@ class Dailys {
      * Create an instance of the Dailys class.
      *
      * @param {string} uri - The base URI for all of the requests.
+     * @param {string} version - The api version for the requests.
      * @param {string} token - The authorization token.
      */
-    constructor(uri = 'https://dailys.nz/api/v1', token = null) {
+    constructor(uri = 'https://api.dailys.nz/', version = 'api/v1/', token = null) {
+        // Sanitise the uri and versions.
+        version = strEndsWith(version, '/') ? version : version + '/';
+        version = strStartsWith(version, '/') ? version.substring(0, 1) : version;
+        uri = strStartsWith(uri, '/') ? uri : uri + '/';
+
         // Create a request instance with the base URI, and
         // create a global request instance without the base uri.
         this.request = new Request(uri);
-        this.global = new Request();
 
         // If the token was supplied, then we use the authorisation
         // token to authenticate the requests.
@@ -54,24 +80,24 @@ class Dailys {
         }
 
         // Assign all of the simple single resource instances.
-        this.organisation = new SingleResource(this.request, 'organisation');
-        this.user = new SingleResource(this.request, 'user');
+        this.organisation = new SingleResource(this.request, version + 'organisation');
+        this.user = new SingleResource(this.request, version + 'user');
 
         // Assign all of the standard restful resource instances.
-        this.expenses = new RestfulResource(this.request, 'expenses');
-        this.categories = new RestfulResource(this.request, 'categories', ['charges', 'tasks']);
-        this.charges = new RestfulResource(this.request, 'charges', ['categories']);
-        this.clients = new RestfulResource(this.request, 'clients', ['invoices', 'projects']);
-        this.invites = new RestfulResource(this.request, 'invites', ['resend']);
-        this.tasks = new RestfulResource(this.request, 'tasks', ['categories']);
-        this.roles = new RestfulResource(this.request, 'roles');
+        this.expenses = new RestfulResource(this.request, version + 'expenses');
+        this.categories = new RestfulResource(this.request, version + 'categories', ['charges', 'tasks']);
+        this.charges = new RestfulResource(this.request, version + 'charges', ['categories']);
+        this.clients = new RestfulResource(this.request, version + 'clients', ['invoices', 'projects']);
+        this.invites = new RestfulResource(this.request, version + 'invites', ['resend']);
+        this.tasks = new RestfulResource(this.request, version + 'tasks', ['categories']);
+        this.roles = new RestfulResource(this.request, version + 'roles');
 
         // Assign all of the non-standard resources.
-        this.permissions = new PermissionResource(this.request);
-        this.projects = new ProjectResource(this.request);
-        this.times = new TimeResource(this.request);
-        this.users = new UserResource(this.request);
-        this.invoices = new InvoiceResource(this.request);
+        this.permissions = new PermissionResource(this.request, version);
+        this.projects = new ProjectResource(this.request, version);
+        this.times = new TimeResource(this.request, version);
+        this.users = new UserResource(this.request, version);
+        this.invoices = new InvoiceResource(this.request, version);
     }
 
     /**
@@ -82,7 +108,6 @@ class Dailys {
      */
     onSuccess(handler) {
         this.request.onSuccess(handler);
-        this.global.onSuccess(handler);
 
         return this;
     }
@@ -95,7 +120,6 @@ class Dailys {
      */
     onError(handler) {
         this.request.onError(handler);
-        this.global.onError(handler);
 
         return this;
     }
@@ -109,7 +133,6 @@ class Dailys {
      */
     header(header, value) {
         this.request.header(header, value);
-        this.global.header(header, value);
 
         return this;
     }
@@ -122,7 +145,6 @@ class Dailys {
      */
     before(onFulfilled: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>, onRejected?: (error: any) => any) {
         this.request.before(onFulfilled, onRejected);
-        this.global.before(onFulfilled, onRejected);
     }
 
     /**
@@ -133,7 +155,6 @@ class Dailys {
      */
     after(onFulfilled: (value: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>, onRejected?: (error: any) => any) {
         this.request.after(onFulfilled, onRejected);
-        this.global.after(onFulfilled, onRejected);
     }
 
     /**

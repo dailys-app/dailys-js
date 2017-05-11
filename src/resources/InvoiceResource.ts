@@ -5,9 +5,10 @@ class InvoiceResource extends RestfulResource {
      * Create a new InvoiceResource instance with the request property.
      *
      * @param {Request} request - An instance of the request class.
+     * @param {string} version - The api version to use.
      */
-    constructor(request) {
-        super(request, 'invoices');
+    constructor(request, version) {
+        super(request, version + 'invoices');
     }
 
     /**

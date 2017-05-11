@@ -11,9 +11,10 @@ class UserResource extends RestfulResource {
      * Create a new UserResource instance with the request property.
      *
      * @param {Request} request - An instance of the request class.
+     * @param {string} version - The api version to use.
      */
-    constructor(request) {
-        super(request, 'users');
+    constructor(request, version) {
+        super(request, version + 'users');
         this.times = {
 
             /**
@@ -24,7 +25,7 @@ class UserResource extends RestfulResource {
              * @returns {Promise}
              */
             get(index, params = {}) {
-                return request.get(`users/${index}/times`, params);
+                return request.get(version + `users/${index}/times`, params);
             },
 
             /**
@@ -35,7 +36,7 @@ class UserResource extends RestfulResource {
              * @returns {Promise}
              */
             overview(index, params = {}) {
-                return request.get(`users/${index}/times/overview`, params);
+                return request.get(version + `users/${index}/times/overview`, params);
             },
 
             /**
@@ -47,7 +48,7 @@ class UserResource extends RestfulResource {
              * @returns {Promise}
              */
             fetch(index, time, params = {}) {
-                return request.get(`users/${index}/times/${time}`, params);
+                return request.get(version + `users/${index}/times/${time}`, params);
             }
         };
     }
