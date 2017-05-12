@@ -140,11 +140,12 @@ class ProjectResource extends RestfulResource {
      * Update the status of the resource.
      *
      * @param {string} index - The resource id.
+     * @param {object} data - The data payload for the request.
      * @param {object} params - The URL query parameters for the request.
      * @returns {Promise}
      */
-    status(index, params = {}) {
-        return this.update(`${index}/status`, params);
+    status(index, data = {}, params = {}) {
+        return this.update(`${index}/status`, data, params);
     }
 
     /**
