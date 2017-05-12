@@ -17,9 +17,10 @@ class Request {
      */
     constructor(baseURL = '/', successHandler = $response => $response.data, errorHandler = $error => $error) {
         this.axios =  Axios.create({ baseURL });
-        this.successHandler = successHandler;
-        this.errorHandler = errorHandler;
         this.headers = {};
+
+        this.onError(errorHandler);
+        this.onSuccess(successHandler);
     }
 
     /**
