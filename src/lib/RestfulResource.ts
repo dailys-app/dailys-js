@@ -17,8 +17,8 @@ class RestfulResource extends Resource {
 
         let _self = this;
 
-        for (let subResource in additional) {
-            _self[additional[subResource]] = (index, params = {}) => {
+        for (let subResource of additional) {
+            _self[subResource] = (index, params = {}) => {
                 return _self.fetch(`${index}/${subResource}`, params);
             };
         }
