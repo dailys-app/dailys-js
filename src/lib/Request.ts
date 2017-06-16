@@ -60,7 +60,7 @@ class Request {
     onError(handler) {
         this.errorHandler = function($error) {
             handler($error);
-            return $error;
+            throw $error;
         };
 
         return this;
