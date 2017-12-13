@@ -5,8 +5,8 @@ import Axios, {AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig} fro
  */
 class Request {
     private axios: AxiosInstance;
-    private successHandler: (AxiosResponse) => object;
-    private errorHandler: (AxiosError) => object;
+    private successHandler: (AxiosResponse) => any;
+    private errorHandler: (AxiosError) => any;
     private headers: object;
 
     /**
@@ -66,8 +66,6 @@ class Request {
             
             if (! preventPropagation) {
                 throw $error;
-            } else {
-                return $error;
             }
         };
 
