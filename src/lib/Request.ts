@@ -44,8 +44,11 @@ class Request {
      */
     onSuccess(handler) {
         this.successHandler = function($response) {
-            handler($response);
-            return $response.data;
+            let preventPropagation = handler($response);
+
+            if (! preventPropagation) {
+                return $response.data;
+            }
         };
 
         return this;
@@ -59,8 +62,13 @@ class Request {
      */
     onError(handler) {
         this.errorHandler = function($error) {
-            handler($error);
-            throw $error;
+            let preventPropagation = handler($error);
+            
+            if (! preventPropagation) {
+                throw $error;
+            } else {
+                return $error;
+            }
         };
 
         return this;
